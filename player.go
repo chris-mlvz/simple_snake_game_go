@@ -1,13 +1,19 @@
 package main
 
+import (
+	"math/rand"
+	"time"
+)
+
 type Player struct {
 	x      int
 	y      int
 	symbol string
 }
 
-func NewPlayer(x, y int) Player {
-	return Player{x: x, y: y, symbol: "@"}
+func NewPlayer(width, height int) *Player {
+	rand.Seed(time.Now().UnixNano())
+	return &Player{x: rand.Intn(width), y: rand.Intn(height), symbol: "@"}
 }
 
 func (p *Player) move(direction rune) {

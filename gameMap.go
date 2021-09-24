@@ -12,11 +12,11 @@ type GameMap struct {
 	enemies []*enemy
 }
 
-func NewGameMap(width, height int, player *Player) GameMap {
+func NewGameMap(width, height, enemyNumber int) GameMap {
 	return GameMap{width: width,
 		height:  height,
-		player:  player,
-		enemies: NewEnemies()}
+		player:  NewPlayer(width, height),
+		enemies: NewEnemies(enemyNumber, width, height)}
 }
 
 func (m *GameMap) PrintGame() {

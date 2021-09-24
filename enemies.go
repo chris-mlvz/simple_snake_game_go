@@ -1,8 +1,13 @@
 package main
 
+import (
+	"math/rand"
+	"time"
+)
+
 type enemy struct {
-	x int
-	y int
+	x      int
+	y      int
 	symbol string
 }
 
@@ -10,8 +15,13 @@ func newEnemy(x, y int) *enemy {
 	return &enemy{x: x, y: y, symbol: "X"}
 }
 
-func NewEnemies() []*enemy {
-	return []*enemy{newEnemy(2, 3), newEnemy(5, 4), newEnemy(3, 4), newEnemy(10, 6)}
+func NewEnemies(n, width, height int) []*enemy {
+	var enemies []*enemy
+	for i := 0; i < n; i++ {
+		rand.Seed(time.Now().UnixNano())
+		enemies = append(enemies, newEnemy(rand.Intn(width), rand.Intn(height)))
+	}
+	return enemies
 }
 
 func (e *enemy) Print(x, y int) (string, bool) {
