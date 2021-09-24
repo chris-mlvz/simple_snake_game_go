@@ -1,0 +1,33 @@
+package main
+
+type enemy struct {
+	x int
+	y int
+}
+
+func newEnemy(x, y int) *enemy {
+	return &enemy{x: x, y: y}
+}
+
+func NewEnemies() []*enemy {
+	return []*enemy{newEnemy(2, 3), newEnemy(5, 4), newEnemy(3, 4), newEnemy(10, 6)}
+}
+
+func (e *enemy) Print(x, y int) (string, bool) {
+	if e.x == x && e.y == y {
+		return "X", true
+	}
+	return "", false
+}
+
+func PrintEnemies(enemies []*enemy, x, y int) (string, bool) {
+	for _, e := range enemies {
+		char, ok := e.Print(x, y)
+		if ok {
+			return char, ok
+		}
+	}
+	return "", false
+}
+
+
