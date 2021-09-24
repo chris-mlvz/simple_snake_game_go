@@ -3,10 +3,11 @@ package main
 type enemy struct {
 	x int
 	y int
+	symbol string
 }
 
 func newEnemy(x, y int) *enemy {
-	return &enemy{x: x, y: y}
+	return &enemy{x: x, y: y, symbol: "X"}
 }
 
 func NewEnemies() []*enemy {
@@ -15,7 +16,7 @@ func NewEnemies() []*enemy {
 
 func (e *enemy) Print(x, y int) (string, bool) {
 	if e.x == x && e.y == y {
-		return "X", true
+		return e.symbol, true
 	}
 	return "", false
 }
@@ -29,5 +30,3 @@ func PrintEnemies(enemies []*enemy, x, y int) (string, bool) {
 	}
 	return "", false
 }
-
-

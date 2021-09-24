@@ -1,12 +1,13 @@
 package main
 
 type Player struct {
-	x int
-	y int
+	x      int
+	y      int
+	symbol string
 }
 
 func NewPlayer(x, y int) Player {
-	return Player{x: x, y: y}
+	return Player{x: x, y: y, symbol: "@"}
 }
 
 func (p *Player) move(direction rune) {
@@ -24,19 +25,15 @@ func (p *Player) move(direction rune) {
 
 func (p *Player) Print(x, y int) (string, bool) {
 	if p.x == x && p.y == y {
-		return "@", true
+		return p.symbol, true
 	}
 	return "", false
 }
 
-// func (p *Player) Kill(enemies []*enemy) {
-// 	for i := 0; i < len(enemies); i++ {
-// 		if p.x == enemies[i].x && p.y == enemies[i].y {
-// 			enemies[i] = enemies[len(enemies)-1]
-// 			enemies = enemies[:len(enemies)-1]
-// 			if len(enemies) == 0 {
-// 				enemies = []*enemy{}
-// 			}
-// 		}
-// 	}
-// }
+func (p *Player) Kill(enemies []*enemy) {
+	for _, e := range enemies {
+		if p.x == e.x && p.y == e.y {
+			e.symbol = " "
+		}
+	}
+}

@@ -30,7 +30,7 @@ func startGame(player *Player, gameMap *GameMap) {
 			break
 		}
 		player.move(char)
-		// player.Kill(gameMap.enemies)
+		player.Kill(gameMap.enemies)
 		gameMap.Walls()
 	}
 }
