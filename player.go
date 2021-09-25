@@ -13,7 +13,7 @@ type Player struct {
 
 func NewPlayer(width, height int) *Player {
 	rand.Seed(time.Now().UnixNano())
-	return &Player{x: rand.Intn(width), y: rand.Intn(height), symbol: '🐍'}
+	return &Player{x: rand.Intn(width), y: rand.Intn(height), symbol: '◯'}
 }
 
 func (p *Player) Move(direction rune) {

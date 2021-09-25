@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	widthMap  = 15
+	widthMap  = 30
 	heightMap = 10
 	enemies   = 10
 )
@@ -26,7 +26,7 @@ loop:
 
 		fmt.Println("Snake Game")
 		gameMap.PrintGame()
-		fmt.Println("If you want to move use [w,a,s,d]")
+		fmt.Println("If you want to move use [w,a,s,d] or")
 		fmt.Println("If you want to restart write [r]")
 		fmt.Println("If you want to exit write [e]")
 		char, _, err := keyboard.GetSingleKey()

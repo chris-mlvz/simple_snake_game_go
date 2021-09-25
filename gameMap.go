@@ -8,14 +8,17 @@ import (
 type GameMap struct {
 	width   int
 	height  int
+	symbol  rune
 	player  *Player
 	enemies map[[2]int]*enemy
 }
 
 func NewGameMap(width, height, enemyNumber int) GameMap {
 	myPlayer := NewPlayer(width, height)
-	return GameMap{width: width,
+	return GameMap{
+		width:   width,
 		height:  height,
+		symbol:  ' ',
 		enemies: NewEnemies(enemyNumber, width, height, myPlayer),
 		player:  myPlayer}
 }
@@ -33,7 +36,7 @@ func (m *GameMap) PrintGame() {
 }
 
 func (m *GameMap) printChar(x, y int) {
-	char_to_draw := ' '
+	char_to_draw := m.symbol
 	char, ok := PrintEnemies(m.enemies, x, y)
 	if ok {
 		char_to_draw = char
@@ -47,15 +50,15 @@ func (m *GameMap) printChar(x, y int) {
 
 func (m *GameMap) printHLine() {
 
-	fmt.Printf("+%v+\n", strings.Repeat(string('-'), m.width))
+	fmt.Printf("+%v+\n", strings.Repeat("-", m.width))
 }
 
 func (m *GameMap) printStartLine() {
-	fmt.Print(string('|'))
+	fmt.Print("|")
 }
 
 func (m *GameMap) printEndLine() {
-	fmt.Println(string('|'))
+	fmt.Println("|")
 }
 
 func (m *GameMap) Walls() {

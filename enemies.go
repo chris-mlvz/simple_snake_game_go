@@ -12,7 +12,7 @@ type enemy struct {
 }
 
 func newEnemy(x, y int) *enemy {
-	return &enemy{x: x, y: y, symbol: 'X'}
+	return &enemy{x: x, y: y, symbol: '✰'}
 }
 
 func NewEnemies(n, width, height int, p *Player) map[[2]int]*enemy {
