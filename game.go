@@ -8,15 +8,21 @@ import (
 )
 
 const (
-	widthMap  = 60
-	heightMap = 15
+	widthMap  = 15
+	heightMap = 10
 	enemies   = 10
 )
 
 func startGame(gameMap *GameMap) {
 	var re bool
+loop:
 	for {
 		clear()
+
+		if gameMap.IsGameOver() {
+			win()
+			break
+		}
 
 		fmt.Println("Snake Game")
 		gameMap.PrintGame()
@@ -28,16 +34,16 @@ func startGame(gameMap *GameMap) {
 			log.Fatal(err)
 		}
 
-		if char == 'e' {
+		switch char {
+		case 'e':
 			close()
-			break
-		}
-		if char == 'r' {
+			break loop
+		case 'r':
 			re = true
-			break
+			break loop
 		}
 
-		gameMap.player.move(char)
+		gameMap.player.Move(char)
 		gameMap.player.Kill(gameMap.enemies)
 		gameMap.Walls()
 	}
@@ -56,4 +62,9 @@ func restart() {
 func close() {
 	clear()
 	fmt.Println("You close the game, good bye")
+}
+
+func win() {
+	clear()
+	fmt.Println("CONGRATULATIONS, YOU WIN")
 }
