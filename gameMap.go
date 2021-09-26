@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"strings"
 )
 
@@ -37,20 +38,26 @@ func (m *GameMap) PrintGame() {
 
 func (m *GameMap) printChar(x, y int) {
 	char_to_draw := m.symbol
-	char, ok := PrintEnemies(m.enemies, x, y)
+
+	char, ok := SetEnemies(m.enemies, x, y)
 	if ok {
 		char_to_draw = char
 	}
-	char, ok = m.player.Print(x, y)
+	char, ok = m.player.setTail(x, y)
 	if ok {
 		char_to_draw = char
 	}
-	fmt.Print(string(char_to_draw))
+	char, ok = m.player.Set(x, y)
+	if ok {
+		char_to_draw = char
+	}
+
+	fmt.Printf(" %v ", string(char_to_draw))
 }
 
 func (m *GameMap) printHLine() {
 
-	fmt.Printf("+%v+\n", strings.Repeat("-", m.width))
+	fmt.Printf("+%v+\n", strings.Repeat("---", m.width))
 }
 
 func (m *GameMap) printStartLine() {
@@ -75,12 +82,17 @@ func (m *GameMap) Walls() {
 	}
 }
 
-func (m *GameMap) IsGameOver() bool {
-	count := 0
-	for _, e := range m.enemies {
-		if e.symbol == ' ' {
-			count++
+func (m *GameMap) checkWin() bool {
+	return m.player.tail == m.width*m.height
+}
+
+func (m *GameMap) RespawnEnemies() {
+	if len(m.enemies) < enemiesNum {
+		playerPosition := [...]int{m.player.x, m.player.y}
+		w, h := rand.Intn(m.width), rand.Intn(m.height)
+		newPosition := [...]int{rand.Intn(m.width), rand.Intn(m.height)}
+		if _, ok := m.enemies[newPosition]; !ok && newPosition != playerPosition {
+			m.enemies[newPosition] = newEnemy(w, h)
 		}
 	}
-	return count == len(m.enemies)
 }
